@@ -70,19 +70,13 @@ app.post('/login/staff', async (req, res) => {
  *     Staff:
  *       type: object
  *       properties:
- *         _id: 
- *           type: string
  *         username: 
- *           type: string
- *         password: 
- *           type: string
- *         name:
  *           type: string
  *         phonenumber:
  *           type: string
- *         staffnumber:
- *           type: string
  *         role:
+ *           type: string
+ *         token:
  *           type: string
  *          
  */
@@ -103,12 +97,8 @@ app.post('/login/staff', async (req, res) => {
  *                 type: string
  *               password:
  *                 type: string
- *               name:
- *                 type: string
  *               phonenumber:
  *                 type: string
- *               staffnumber:
- *                 type
  *               role: 
  *                 type: string
  *     responses:
@@ -164,7 +154,11 @@ app.post('/login/adminonly', async (req, res) => {
  *           schema: 
  *             type: object
  *             properties:
- *               token: 
+ *               name: 
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               role:
  *                 type: string
  *     responses:
  *       200:
@@ -203,15 +197,11 @@ app.post('/login/security', async (req, res) => {
  *     Security:
  *       type: object
  *       properties:
- *         _id: 
- *           type: string
- *         securityname: 
- *           type: string
  *         securityusername: 
  *           type: string
- *         phonenumber:
- *           type: string
  *         role:
+ *           type: string
+ *         token:
  *           type: string
  *          
  */
@@ -229,6 +219,8 @@ app.post('/login/security', async (req, res) => {
  *             type: object
  *             properties:
  *               securityusername: 
+ *                 type: string
+ *               password: 
  *                 type: string
  *               role: 
  *                 type: string
@@ -270,59 +262,36 @@ app.get('/find/publicview/visitor/:name', async(req,res)=>{
  *     Visitor:
  *       type: object
  *       properties:
- *         _id: 
- *           type: string
  *         name: 
  *           type: string
- *         phonenumber: 
- *           type: string
- *         visitid:
- *           type: string
- *         time:
+ *         time arrived:
  *           type: string
  *         date:
- *           type: string
- *         tovisit:
- *           type: string
- *         Relationship:
  *           type: string
  *          
  */
 
 /**
  * @swagger
- * /find/publicview/visitor/:name:
+ * /find/publicview/visitor/{name}:
  *   get:
  *     description: View Visitor
- *     requestHeader:
- *       required: true
- *       content:
- *         application/json:
- *           schema: 
- *             type: object
- *             properties:
- *               name: 
- *                 type: string
- *               visitorid:
- *                 type: string
- *               time:
- *                 type: string
- *               date:
- *                 type: string
- *               tovisit:
- *                 type: string
- *               Relationship: 
- *                 type: string
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         schema: 
+ *             type: string
  *     responses:
  *       200:
- *         description: Successful login
+ *         description: Visitor existed
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Visitor'
  * 
  *       404:
- *         description: Wrong password or username
+ *         description: No visitor existed
  */
 
 //badge
@@ -351,65 +320,46 @@ app.get('/find/publicview/badge/:visitid', async(req,res)=>{
  *     Badge:
  *       type: object
  *       properties:
- *         _id: 
- *           type: string
  *         name: 
  *           type: string
  *         visitid: 
  *           type: string
  *         reason:
  *           type: string
- *         time:
+ *         time arrived:
+ *           type: string
+ *         date:
  *           type: string
  *         tovisit:
  *           type: string
- *         block to visit:
+ *         block:
  *           type: string
  *         parking:
  *           type: string
- *         date:
- *           type
  *          
  */
 
 /**
  * @swagger
- * /find/publicview/badge/:visitid:
+ * /find/publicview/badge/{visitid}:
  *   get:
  *     description: View Badge
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema: 
- *             type: object
- *             properties:
- *               name: 
- *                 type: string
- *               visitid:
- *                 type: string
- *               reason:
- *                 type: string
- *               time:
- *                 type: string
- *               tovisit:
- *                 type
- *               block to visit: 
- *                 type: string
- *               parking:
- *                 type: 
- *               date:
- *                 type:
+ *     parameters:
+ *       - in: path
+ *         visitid: visitid
+ *         required: true
+ *         schema: 
+ *             type: string
  *     responses:
  *       200:
- *         description: Successful login
+ *         description: Badge exist
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Badge'
  * 
  *       404:
- *         description: Wrong password or username
+ *         description: No badge
  */
  
 //staff
@@ -439,53 +389,34 @@ app.get('/find/publicview/staff/:username', async(req,res)=>{
  *       properties:
  *         username: 
  *           type: string
- *         password: 
- *           type: string
- *         name:
- *           type: string
- *         phonenumber:
- *           type: string
  *         staffnumber:
  *           type: string
- *         role:
+ *         phonenumber:
  *           type: string
  *          
  */
 
 /**
  * @swagger
- * /find/publicview/staff/:username:
+ * /find/publicview/staff/{username}:
  *   get:
  *     description: View Staff
  *     parameters:
- *       required: true
- *       content:
- *         application/json:
- *           schema: 
- *             type: object
- *             properties:
- *               username: 
- *                 type: string
- *               password:
- *                 type: string
- *               name:
- *                 type: string
- *               phonenumber:
- *                 type: string
- *               staffnumber:
- *                 type
- *               role: 
- *                 type: string
+ *       - in: path
+ *         username: username
+ *         required: true
+ *         schema: 
+ *             type: string
  *     responses:
  *       200:
- *         description: Successful login
+ *         description: Staff exist
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/View_Staff'
  * 
  *       404:
- *         description: Wrong password or username
+ *         description: No staff exist
  */
 
 
